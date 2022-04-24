@@ -101,13 +101,17 @@ public struct FloatingLabelTextField: View {
             } else {
                 TextField("", text: $textFieldValue.animation(), onEditingChanged: { (isChanged) in
                     withAnimation {
-                        self.isSelected = isChanged
+                        DispatchQueue.main.async {
+                            self.isSelected = isChanged
+                        }
                     }
 
-                    self.validtionChecker = self.currentError.condition
-                    self.editingChanged(isChanged)
-                    self.isShowError = self.notifier.isRequiredField
-                    arrTextFieldEditActions = self.notifier.arrTextFieldEditActions
+                    DispatchQueue.main.async {
+                        self.validtionChecker = self.currentError.condition
+                        self.editingChanged(isChanged)
+                        self.isShowError = self.notifier.isRequiredField
+                        arrTextFieldEditActions = self.notifier.arrTextFieldEditActions
+                    }
                 }, onCommit: {
                     self.isShowError = self.notifier.isRequiredField
                     self.validtionChecker = self.currentError.condition
